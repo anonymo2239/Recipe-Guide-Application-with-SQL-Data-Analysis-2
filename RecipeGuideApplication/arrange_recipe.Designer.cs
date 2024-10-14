@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(arrange_recipe));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -43,26 +44,27 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.dbRecipeApplicationDataSet = new RecipeGuideApplication.DbRecipeApplicationDataSet();
-            this.tblRecipesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.tbl_RecipesTableAdapter = new RecipeGuideApplication.DbRecipeApplicationDataSetTableAdapters.Tbl_RecipesTableAdapter();
             this.recipeIDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.recipeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.recipeCategoryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.recipeTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.recipeInstructionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tblRecipesBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dbRecipeApplicationDataSet = new RecipeGuideApplication.DbRecipeApplicationDataSet();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.tbl_RecipesTableAdapter = new RecipeGuideApplication.DbRecipeApplicationDataSetTableAdapters.Tbl_RecipesTableAdapter();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dbRecipeApplicationDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblRecipesBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dbRecipeApplicationDataSet)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.DarkKhaki;
+            this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.richTextBox1);
             this.groupBox1.Controls.Add(this.maskedTextBox1);
             this.groupBox1.Controls.Add(this.textBox1);
@@ -79,6 +81,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tarif Bilgisi";
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(391, 183);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(113, 37);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "minute";
+            // 
             // richTextBox1
             // 
             this.richTextBox1.BackColor = System.Drawing.Color.White;
@@ -91,12 +102,12 @@
             // maskedTextBox1
             // 
             this.maskedTextBox1.BackColor = System.Drawing.Color.White;
-            this.maskedTextBox1.Location = new System.Drawing.Point(346, 175);
-            this.maskedTextBox1.Mask = "00:00";
+            this.maskedTextBox1.Location = new System.Drawing.Point(317, 176);
+            this.maskedTextBox1.Mask = "000";
             this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(117, 44);
+            this.maskedTextBox1.Size = new System.Drawing.Size(68, 44);
             this.maskedTextBox1.TabIndex = 6;
-            this.maskedTextBox1.ValidatingType = typeof(System.DateTime);
+            this.maskedTextBox1.ValidatingType = typeof(int);
             // 
             // textBox1
             // 
@@ -164,6 +175,7 @@
             this.button1.Size = new System.Drawing.Size(190, 190);
             this.button1.TabIndex = 1;
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -202,42 +214,6 @@
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(1174, 164);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(315, 315);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 9;
-            this.pictureBox1.TabStop = false;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.DarkKhaki;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(1504, 21);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(159, 74);
-            this.button4.TabIndex = 10;
-            this.button4.Text = "Geri";
-            this.button4.UseVisualStyleBackColor = false;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // dbRecipeApplicationDataSet
-            // 
-            this.dbRecipeApplicationDataSet.DataSetName = "DbRecipeApplicationDataSet";
-            this.dbRecipeApplicationDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // tblRecipesBindingSource
-            // 
-            this.tblRecipesBindingSource.DataMember = "Tbl_Recipes";
-            this.tblRecipesBindingSource.DataSource = this.dbRecipeApplicationDataSet;
-            // 
-            // tbl_RecipesTableAdapter
-            // 
-            this.tbl_RecipesTableAdapter.ClearBeforeFill = true;
-            // 
             // recipeIDDataGridViewTextBoxColumn
             // 
             this.recipeIDDataGridViewTextBoxColumn.DataPropertyName = "RecipeID";
@@ -269,6 +245,42 @@
             this.recipeInstructionDataGridViewTextBoxColumn.HeaderText = "RecipeInstruction";
             this.recipeInstructionDataGridViewTextBoxColumn.Name = "recipeInstructionDataGridViewTextBoxColumn";
             // 
+            // tblRecipesBindingSource
+            // 
+            this.tblRecipesBindingSource.DataMember = "Tbl_Recipes";
+            this.tblRecipesBindingSource.DataSource = this.dbRecipeApplicationDataSet;
+            // 
+            // dbRecipeApplicationDataSet
+            // 
+            this.dbRecipeApplicationDataSet.DataSetName = "DbRecipeApplicationDataSet";
+            this.dbRecipeApplicationDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(1174, 164);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(315, 315);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 9;
+            this.pictureBox1.TabStop = false;
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.Color.DarkKhaki;
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Location = new System.Drawing.Point(1504, 21);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(159, 74);
+            this.button4.TabIndex = 10;
+            this.button4.Text = "Geri";
+            this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // tbl_RecipesTableAdapter
+            // 
+            this.tbl_RecipesTableAdapter.ClearBeforeFill = true;
+            // 
             // arrange_recipe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
@@ -291,9 +303,9 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dbRecipeApplicationDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblRecipesBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dbRecipeApplicationDataSet)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -323,5 +335,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn recipeCategoryDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn recipeTimeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn recipeInstructionDataGridViewTextBoxColumn;
+        private System.Windows.Forms.Label label5;
     }
 }

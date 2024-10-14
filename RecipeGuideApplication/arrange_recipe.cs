@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Data.SqlClient;
+using System.Collections.Generic;
 
 namespace RecipeGuideApplication
 {
@@ -9,6 +11,28 @@ namespace RecipeGuideApplication
         public arrange_recipe()
         {
             InitializeComponent();
+            FillCategoryComboBox();
+        }
+        private void FillCategoryComboBox()
+        {
+                List<string> categories = new List<string>
+            {
+        
+                "Ana Yemek",
+                "Çorba",
+                "Zeytinyağlı",
+                "Tatlı",
+                "Meze",
+                "Fast Food",
+                "Salata",
+                "Börek",
+                "Kahvaltılık",
+                "İçecek"
+            };
+
+            comboBox1.DataSource = categories;
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox1.SelectedIndex = -1;
         }
 
         private void ConfigureDataGridViewColumns()
@@ -57,25 +81,69 @@ namespace RecipeGuideApplication
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0)
+            if (e.RowIndex >= 0 && dataGridView1.Columns.Count >= 5)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
-                // ID sütunundaki bilgiyi textBox1'e yerleştir
-                textBox1.Text = row.Cells["ID"].Value.ToString();
+                // RecipeName (2. sütun, indeks 1)
+                textBox1.Text = row.Cells[1].Value?.ToString() ?? "";
 
-                // Name sütunundaki bilgiyi textBox2'ye yerleştir
-                comboBox1.Text = row.Cells["Name"].Value.ToString();
+                // RecipeCategory (3. sütun, indeks 2)
+                comboBox1.Text = row.Cells[2].Value?.ToString() ?? "";
 
-                // Category sütunundaki bilgiyi comboBox1'e yerleştir
-                comboBox1.Text = row.Cells["Category"].Value.ToString();
+                // RecipeTime (4. sütun, indeks 3)
+                maskedTextBox1.Text = row.Cells[3].Value?.ToString() ?? "";
 
-                // Time sütunundaki bilgiyi maskedTextBox1'e yerleştir
-                maskedTextBox1.Text = row.Cells["Time"].Value.ToString();
-
-                // Instruction sütunundaki bilgiyi richTextBox1'e yerleştir
-                richTextBox1.Text = row.Cells["Instruction"].Value.ToString();
+                // RecipeInstruction (5. sütun, indeks 4)
+                richTextBox1.Text = row.Cells[4].Value?.ToString() ?? "";
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string connectionString = "Data Source=DESKTOP-GU6MGQD\\SQLEXPRESS;Initial Catalog=DbRecipeApplication;Integrated Security=True;Encrypt=False;";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                string query = "INSERT INTO Tbl_Recipes (RecipeName, RecipeCategory, RecipeTime, RecipeInstruction) " +
+                               "VALUES (@RecipeName, @RecipeCategory, @RecipeTime, @RecipeInstruction)";
+
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@RecipeName", textBox1.Text);
+                    command.Parameters.AddWithValue("@RecipeCategory", comboBox1.SelectedItem?.ToString() ?? "");
+                    command.Parameters.AddWithValue("@RecipeTime", maskedTextBox1.Text);
+                    command.Parameters.AddWithValue("@RecipeInstruction", richTextBox1.Text);
+
+                    try
+                    {
+                        connection.Open();
+                        int result = command.ExecuteNonQuery();
+                        if (result > 0)
+                        {
+                            MessageBox.Show("Ekleme başarılı!", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            ClearInputs(); // Girdileri temizleyen metod (aşağıda tanımlanacak)
+                        }
+                        else
+                        {
+                            MessageBox.Show("Tarif eklenemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        // Girdileri temizleyen metod
+        private void ClearInputs()
+        {
+            textBox1.Clear();
+            comboBox1.SelectedIndex = -1;
+            maskedTextBox1.Clear();
+            richTextBox1.Clear();
         }
     }
 }
