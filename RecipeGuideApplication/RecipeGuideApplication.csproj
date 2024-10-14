@@ -52,6 +52,11 @@
     <Compile Include="arrange_recipe.Designer.cs">
       <DependentUpon>arrange_recipe.cs</DependentUpon>
     </Compile>
+    <Compile Include="DbRecipeApplicationDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DbRecipeApplicationDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +95,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="DbRecipeApplicationDataSet.xsc">
+      <DependentUpon>DbRecipeApplicationDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DbRecipeApplicationDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DbRecipeApplicationDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DbRecipeApplicationDataSet.xss">
+      <DependentUpon>DbRecipeApplicationDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

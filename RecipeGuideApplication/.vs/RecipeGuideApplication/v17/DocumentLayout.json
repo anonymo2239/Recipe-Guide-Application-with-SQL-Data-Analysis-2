@@ -1,0 +1,57 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\simsek\\Desktop\\GitHub\\Recipe-Guide-Application-with-SQL-Data-Analysis-2\\RecipeGuideApplication\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{BF0E408E-21A0-46C7-B92A-239EB525126F}|RecipeGuideApplication.csproj|C:\\Users\\simsek\\Desktop\\GitHub\\Recipe-Guide-Application-with-SQL-Data-Analysis-2\\RecipeGuideApplication\\arrange_recipe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BF0E408E-21A0-46C7-B92A-239EB525126F}|RecipeGuideApplication.csproj|solutionrelative:arrange_recipe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BF0E408E-21A0-46C7-B92A-239EB525126F}|RecipeGuideApplication.csproj|c:\\users\\simsek\\desktop\\github\\recipe-guide-application-with-sql-data-analysis-2\\recipeguideapplication\\arrange_recipe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{BF0E408E-21A0-46C7-B92A-239EB525126F}|RecipeGuideApplication.csproj|solutionrelative:arrange_recipe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "arrange_recipe.cs",
+              "DocumentMoniker": "C:\\Users\\simsek\\Desktop\\GitHub\\Recipe-Guide-Application-with-SQL-Data-Analysis-2\\RecipeGuideApplication\\arrange_recipe.cs",
+              "RelativeDocumentMoniker": "arrange_recipe.cs",
+              "ToolTip": "C:\\Users\\simsek\\Desktop\\GitHub\\Recipe-Guide-Application-with-SQL-Data-Analysis-2\\RecipeGuideApplication\\arrange_recipe.cs",
+              "RelativeToolTip": "arrange_recipe.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAAAEAAAABBAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-14T13:10:23.286Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "arrange_recipe.cs [Tasar\u0131m]",
+              "DocumentMoniker": "C:\\Users\\simsek\\Desktop\\GitHub\\Recipe-Guide-Application-with-SQL-Data-Analysis-2\\RecipeGuideApplication\\arrange_recipe.cs",
+              "RelativeDocumentMoniker": "arrange_recipe.cs",
+              "ToolTip": "C:\\Users\\simsek\\Desktop\\GitHub\\Recipe-Guide-Application-with-SQL-Data-Analysis-2\\RecipeGuideApplication\\arrange_recipe.cs [Tasar\u0131m]",
+              "RelativeToolTip": "arrange_recipe.cs [Tasar\u0131m]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-14T13:10:23.595Z",
+              "EditorCaption": " [Tasar\u0131m]"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
