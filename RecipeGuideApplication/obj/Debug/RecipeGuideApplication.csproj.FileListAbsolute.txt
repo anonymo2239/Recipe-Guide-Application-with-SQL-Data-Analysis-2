@@ -10,3 +10,4 @@ C:\Users\Alperen Arda\OneDrive\Desktop\GitHub\Recipe-Guide-Application-with-SQL-
 C:\Users\Alperen Arda\OneDrive\Desktop\GitHub\Recipe-Guide-Application-with-SQL-Data-Analysis-2\RecipeGuideApplication\obj\Debug\RecipeGuideApplication.Form1.resources
 C:\Users\Alperen Arda\OneDrive\Desktop\GitHub\Recipe-Guide-Application-with-SQL-Data-Analysis-2\RecipeGuideApplication\obj\Debug\RecipeGuideApplication.arrange_recipe.resources
 C:\Users\Alperen Arda\OneDrive\Desktop\GitHub\Recipe-Guide-Application-with-SQL-Data-Analysis-2\RecipeGuideApplication\obj\Debug\RecipeGuideApplication.my_ingredients.resources
+C:\Users\Alperen Arda\OneDrive\Desktop\GitHub\Recipe-Guide-Application-with-SQL-Data-Analysis-2\RecipeGuideApplication\obj\Debug\RecipeGuideApplication.FilterSearching.resources
