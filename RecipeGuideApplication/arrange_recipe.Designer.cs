@@ -54,11 +54,16 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button4 = new System.Windows.Forms.Button();
             this.tbl_RecipesTableAdapter = new RecipeGuideApplication.DbRecipeApplicationDataSetTableAdapters.Tbl_RecipesTableAdapter();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblRecipesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dbRecipeApplicationDataSet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -74,9 +79,9 @@
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(206, 21);
+            this.groupBox1.Location = new System.Drawing.Point(392, 21);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(834, 420);
+            this.groupBox1.Size = new System.Drawing.Size(704, 420);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tarif Bilgisi";
@@ -84,25 +89,25 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(391, 183);
+            this.label5.Location = new System.Drawing.Point(388, 186);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(113, 37);
+            this.label5.Size = new System.Drawing.Size(110, 37);
             this.label5.TabIndex = 8;
-            this.label5.Text = "minute";
+            this.label5.Text = "dakika";
             // 
             // richTextBox1
             // 
             this.richTextBox1.BackColor = System.Drawing.Color.White;
-            this.richTextBox1.Location = new System.Drawing.Point(244, 239);
+            this.richTextBox1.Location = new System.Drawing.Point(189, 242);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(573, 165);
+            this.richTextBox1.Size = new System.Drawing.Size(483, 165);
             this.richTextBox1.TabIndex = 7;
             this.richTextBox1.Text = "";
             // 
             // maskedTextBox1
             // 
             this.maskedTextBox1.BackColor = System.Drawing.Color.White;
-            this.maskedTextBox1.Location = new System.Drawing.Point(317, 176);
+            this.maskedTextBox1.Location = new System.Drawing.Point(314, 179);
             this.maskedTextBox1.Mask = "000";
             this.maskedTextBox1.Name = "maskedTextBox1";
             this.maskedTextBox1.Size = new System.Drawing.Size(68, 44);
@@ -112,7 +117,7 @@
             // textBox1
             // 
             this.textBox1.BackColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(189, 64);
+            this.textBox1.Location = new System.Drawing.Point(186, 67);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(277, 44);
             this.textBox1.TabIndex = 5;
@@ -121,7 +126,7 @@
             // 
             this.comboBox1.BackColor = System.Drawing.Color.White;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(189, 119);
+            this.comboBox1.Location = new System.Drawing.Point(186, 122);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(277, 45);
             this.comboBox1.TabIndex = 4;
@@ -130,17 +135,17 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(23, 239);
+            this.label4.Location = new System.Drawing.Point(20, 242);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(189, 37);
+            this.label4.Size = new System.Drawing.Size(174, 37);
             this.label4.TabIndex = 3;
-            this.label4.Text = "Malzemeler:";
+            this.label4.Text = "Hazırlanışı:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(23, 183);
+            this.label3.Location = new System.Drawing.Point(20, 186);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(288, 37);
             this.label3.TabIndex = 2;
@@ -150,7 +155,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(23, 127);
+            this.label2.Location = new System.Drawing.Point(20, 130);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(145, 37);
             this.label2.TabIndex = 1;
@@ -160,7 +165,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(23, 72);
+            this.label1.Location = new System.Drawing.Point(20, 75);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(147, 37);
             this.label1.TabIndex = 0;
@@ -170,7 +175,7 @@
             // 
             this.button1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button1.BackgroundImage")));
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.Location = new System.Drawing.Point(1046, 21);
+            this.button1.Location = new System.Drawing.Point(1111, 21);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(190, 190);
             this.button1.TabIndex = 1;
@@ -181,21 +186,23 @@
             // 
             this.button2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button2.BackgroundImage")));
             this.button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button2.Location = new System.Drawing.Point(1046, 219);
+            this.button2.Location = new System.Drawing.Point(1111, 219);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(190, 190);
             this.button2.TabIndex = 2;
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
             this.button3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("button3.BackgroundImage")));
             this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button3.Location = new System.Drawing.Point(1255, 21);
+            this.button3.Location = new System.Drawing.Point(1320, 21);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(190, 190);
             this.button3.TabIndex = 3;
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // dataGridView1
             // 
@@ -208,9 +215,10 @@
             this.recipeTimeDataGridViewTextBoxColumn,
             this.recipeInstructionDataGridViewTextBoxColumn});
             this.dataGridView1.DataSource = this.tblRecipesBindingSource;
-            this.dataGridView1.Location = new System.Drawing.Point(74, 447);
+            this.dataGridView1.Location = new System.Drawing.Point(22, 447);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1601, 364);
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridView1.Size = new System.Drawing.Size(1693, 364);
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -258,7 +266,7 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(1174, 164);
+            this.pictureBox1.Location = new System.Drawing.Point(1239, 164);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(315, 315);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -269,7 +277,7 @@
             // 
             this.button4.BackColor = System.Drawing.Color.DarkKhaki;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(1504, 21);
+            this.button4.Location = new System.Drawing.Point(1569, 21);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(159, 74);
             this.button4.TabIndex = 10;
@@ -281,12 +289,50 @@
             // 
             this.tbl_RecipesTableAdapter.ClearBeforeFill = true;
             // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(1591, 374);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(59, 35);
+            this.textBox2.TabIndex = 11;
+            this.textBox2.Visible = false;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.BackColor = System.Drawing.Color.DarkKhaki;
+            this.groupBox2.Controls.Add(this.textBox3);
+            this.groupBox2.Controls.Add(this.comboBox2);
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.groupBox2.Location = new System.Drawing.Point(13, 21);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(373, 420);
+            this.groupBox2.TabIndex = 12;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Malzeme Ekle";
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Location = new System.Drawing.Point(18, 52);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(335, 45);
+            this.comboBox2.TabIndex = 0;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(18, 122);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(145, 44);
+            this.textBox3.TabIndex = 1;
+            // 
             // arrange_recipe
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(14F, 29F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.LemonChiffon;
             this.ClientSize = new System.Drawing.Size(1751, 823);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.button3);
@@ -306,7 +352,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.tblRecipesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dbRecipeApplicationDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -336,5 +385,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn recipeTimeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn recipeInstructionDataGridViewTextBoxColumn;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.ComboBox comboBox2;
     }
 }

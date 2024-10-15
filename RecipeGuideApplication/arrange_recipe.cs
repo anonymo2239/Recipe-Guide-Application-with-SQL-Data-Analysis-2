@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Data.SqlClient;
 using System.Collections.Generic;
+using System.Data;
 
 namespace RecipeGuideApplication
 {
@@ -13,6 +14,7 @@ namespace RecipeGuideApplication
             InitializeComponent();
             FillCategoryComboBox();
         }
+        SqlConnection baglanti = new SqlConnection("Data Source=DESKTOP-GU6MGQD\\SQLEXPRESS;Initial Catalog=DbRecipeApplication;Integrated Security=True;Encrypt=False;");
         private void FillCategoryComboBox()
         {
                 List<string> categories = new List<string>
@@ -79,11 +81,15 @@ namespace RecipeGuideApplication
             ConfigureDataGridViewColumns();
         }
 
+
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0 && dataGridView1.Columns.Count >= 5)
             {
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                // 1. sütundaki bilgiyi label6'ya yazdır
+                textBox2.Text = row.Cells[0].Value?.ToString() ?? "";
 
                 // RecipeName (2. sütun, indeks 1)
                 textBox1.Text = row.Cells[1].Value?.ToString() ?? "";
@@ -98,7 +104,27 @@ namespace RecipeGuideApplication
                 richTextBox1.Text = row.Cells[4].Value?.ToString() ?? "";
             }
         }
-
+        private void RefreshDataGridView()
+        {
+            try
+            {
+                baglanti.Open();
+                SqlCommand cmd = new SqlCommand("SELECT * FROM Tbl_Recipes", baglanti);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                dataGridView1.DataSource = dt;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Veri yenileme hatası: " + ex.Message);
+            }
+            finally
+            {
+                if (baglanti.State == ConnectionState.Open)
+                    baglanti.Close();
+            }
+        }
         private void button1_Click(object sender, EventArgs e)
         {
             string connectionString = "Data Source=DESKTOP-GU6MGQD\\SQLEXPRESS;Initial Catalog=DbRecipeApplication;Integrated Security=True;Encrypt=False;";
@@ -136,7 +162,7 @@ namespace RecipeGuideApplication
                 }
             }
         }
-
+        
         // Girdileri temizleyen metod
         private void ClearInputs()
         {
@@ -144,6 +170,36 @@ namespace RecipeGuideApplication
             comboBox1.SelectedIndex = -1;
             maskedTextBox1.Clear();
             richTextBox1.Clear();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            
+            baglanti.Open();
+
+            SqlCommand komut = new SqlCommand("UPDATE Tbl_Recipes SET RecipeName = @a1, RecipeCategory = @a2, RecipeTime = @a3,RecipeInstruction = @a4 WHERE RecipeID = @a5", baglanti);
+            komut.Parameters.AddWithValue("@a1", textBox1.Text);
+            komut.Parameters.AddWithValue("@a2", comboBox1.Text);
+            komut.Parameters.AddWithValue("@a3", maskedTextBox1.Text);
+            komut.Parameters.AddWithValue("@a4", richTextBox1.Text);
+            komut.Parameters.AddWithValue("@a5", textBox2.Text);
+
+            komut.ExecuteNonQuery();
+            baglanti.Close();
+            MessageBox.Show("Güncelleme Tamamlandı!");
+            RefreshDataGridView();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            baglanti.Open();        
+            SqlCommand komut = new SqlCommand("DELETE FROM Tbl_Recipes WHERE RecipeID = @a5", baglanti);            
+            komut.Parameters.AddWithValue("@a5", textBox2.Text);
+            komut.ExecuteNonQuery();
+            baglanti.Close();
+            MessageBox.Show("Silme İşlemi Tamamlandı!");
+            RefreshDataGridView();
+
         }
     }
 }
