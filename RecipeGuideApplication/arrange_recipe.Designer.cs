@@ -56,8 +56,11 @@
             this.tbl_RecipesTableAdapter = new RecipeGuideApplication.DbRecipeApplicationDataSetTableAdapters.Tbl_RecipesTableAdapter();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.button5 = new System.Windows.Forms.Button();
             this.textBox3 = new System.Windows.Forms.TextBox();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tblRecipesBindingSource)).BeginInit();
@@ -300,8 +303,11 @@
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.DarkKhaki;
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Controls.Add(this.textBox4);
+            this.groupBox2.Controls.Add(this.button5);
             this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.Controls.Add(this.comboBox2);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.groupBox2.Location = new System.Drawing.Point(13, 21);
             this.groupBox2.Name = "groupBox2";
@@ -310,20 +316,46 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Malzeme Ekle";
             // 
-            // comboBox2
+            // button5
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(18, 52);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(335, 45);
-            this.comboBox2.TabIndex = 0;
+            this.button5.Location = new System.Drawing.Point(18, 334);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(332, 54);
+            this.button5.TabIndex = 2;
+            this.button5.Text = "Ekle";
+            this.button5.UseVisualStyleBackColor = true;
             // 
             // textBox3
             // 
-            this.textBox3.Location = new System.Drawing.Point(18, 122);
+            this.textBox3.Location = new System.Drawing.Point(18, 110);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(145, 44);
+            this.textBox3.Size = new System.Drawing.Size(332, 44);
             this.textBox3.TabIndex = 1;
+            // 
+            // textBox4
+            // 
+            this.textBox4.Location = new System.Drawing.Point(18, 242);
+            this.textBox4.Name = "textBox4";
+            this.textBox4.Size = new System.Drawing.Size(332, 44);
+            this.textBox4.TabIndex = 3;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(18, 70);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(210, 37);
+            this.label6.TabIndex = 4;
+            this.label6.Text = "Malzeme Adı:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(18, 198);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(216, 37);
+            this.label7.TabIndex = 5;
+            this.label7.Text = "Miktar (gr/ml):";
             // 
             // arrange_recipe
             // 
@@ -388,6 +420,9 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox textBox4;
     }
 }
