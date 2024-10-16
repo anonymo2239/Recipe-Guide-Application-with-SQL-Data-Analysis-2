@@ -17,17 +17,16 @@ namespace RecipeGuideApplication
         public Form1()
         {
             InitializeComponent();
+            textBox1.KeyPress += textBox1_KeyPress;
         }
-
-        SqlConnection baglanti = new SqlConnection("Data Source=LAPTOP-E82TE7I7\\SQLEXPRESS;Initial Catalog=DbRecipeApplication2;Integrated Security=True");
 
         private void Form1_Load(object sender, EventArgs e)
         {
             textBox1.BackColor = Color.White;
             textBox1.BorderStyle = BorderStyle.Fixed3D;
 
-            baglanti.Open();
-            SqlCommand cmd = new SqlCommand("SELECT * FROM Tbl_Recipes", baglanti);
+            baglanti_form1.Open();
+            SqlCommand cmd = new SqlCommand("SELECT * FROM Tbl_Recipes", baglanti_form1);
             SqlDataReader reader = cmd.ExecuteReader();
 
             DataTable dt = new DataTable();
@@ -35,7 +34,64 @@ namespace RecipeGuideApplication
             dataGridView1.DataSource = dt;
             dataGridView1.Show();
 
-            baglanti.Close();
+            baglanti_form1.Close();
+
+            ConfigureDataGridViewColumns();
+        }
+
+        /// DATABASE ISLEMLERI
+
+        SqlConnection baglanti_form1 = new SqlConnection("Data Source=LAPTOP-E82TE7I7\\SQLEXPRESS;Initial Catalog=DbRecipeApplication2;Integrated Security=True");
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+            string searched = textBox1.Text.ToLower();
+
+            string query = @"SELECT * FROM Tbl_Recipes
+                WHERE (RecipeName LIKE @SearchPattern)
+                OR (RecipeCategory LIKE @SearchPattern)
+                OR (RecipeInstruction LIKE @SearchPattern)";
+
+            baglanti_form1.Open();
+            SqlCommand cmd2 = new SqlCommand(query, baglanti_form1);
+            cmd2.Parameters.AddWithValue("@SearchPattern", "%" + searched + "%");
+
+            try
+            {
+                SqlDataReader reader = cmd2.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                dataGridView1.DataSource = dt;
+                dataGridView1.Show();
+            }
+            finally
+            {
+                baglanti_form1.Close();
+            }
+
+            ConfigureDataGridViewColumns();
+        }
+
+        public void ApplyFilter_recipe(string incDesc, string filterStyle)
+        {
+            string query = $"SELECT * FROM Tbl_Recipes ORDER BY {filterStyle} {incDesc}";
+
+            baglanti_form1.Open();
+            SqlCommand cmd = new SqlCommand(query, baglanti_form1);
+
+            try
+            {
+                SqlDataReader reader = cmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Load(reader);
+                dataGridView1.DataSource = dt;
+                dataGridView1.Show();
+            }
+            finally
+            {
+                baglanti_form1.Close();
+            }
 
             ConfigureDataGridViewColumns();
         }
@@ -48,18 +104,20 @@ namespace RecipeGuideApplication
                 dataGridView1.Columns[0].HeaderText = "ID";
 
                 dataGridView1.Columns[1].Width = (int)(dataGridView1.Width * 0.2);
-                dataGridView1.Columns[1].HeaderText = "Name";
+                dataGridView1.Columns[1].HeaderText = "Isim";
 
                 dataGridView1.Columns[2].Width = (int)(dataGridView1.Width * 0.25);
-                dataGridView1.Columns[2].HeaderText = "Category";
+                dataGridView1.Columns[2].HeaderText = "Kategori";
 
                 dataGridView1.Columns[3].Width = (int)(dataGridView1.Width * 0.1);
-                dataGridView1.Columns[3].HeaderText = "Time";
+                dataGridView1.Columns[3].HeaderText = "Süre";
 
                 dataGridView1.Columns[4].Width = (int)(dataGridView1.Width * 0.60);
-                dataGridView1.Columns[4].HeaderText = "Instruction";
+                dataGridView1.Columns[4].HeaderText = "Talimat";
             }
         }
+
+        /// CLICK FONKSIYONLARI
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -82,41 +140,11 @@ namespace RecipeGuideApplication
             this.Hide();
         }
 
-        SqlConnection baglanti2 = new SqlConnection("Data Source=LAPTOP-E82TE7I7\\SQLEXPRESS;Initial Catalog=DbRecipeApplication2;Integrated Security=True");
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {   
-           
-            string searched = textBox1.Text.ToLower();
-
-            string query = @"SELECT * FROM Tbl_Recipes
-                WHERE (RecipeName LIKE @SearchPattern)
-                OR (RecipeCategory LIKE @SearchPattern)
-                OR (RecipeInstruction LIKE @SearchPattern)";
-
-            baglanti.Open();
-            SqlCommand cmd2 = new SqlCommand(query, baglanti);
-            cmd2.Parameters.AddWithValue("@SearchPattern", "%" + searched + "%");
-
-            try
-            {
-                SqlDataReader reader = cmd2.ExecuteReader();
-                DataTable dt = new DataTable();
-                dt.Load(reader);
-                dataGridView1.DataSource = dt;
-                dataGridView1.Show();
-            }
-            finally
-            {
-                baglanti.Close();
-            }
-
-            ConfigureDataGridViewColumns();
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void button4_Click(object sender, EventArgs e)
         {
-            
+            FilterSearching filterSearching = new FilterSearching(false);
+            filterSearching.Owner = this;
+            filterSearching.Show();
         }
 
         private void textBox1_Click(object sender, EventArgs e)
@@ -128,6 +156,8 @@ namespace RecipeGuideApplication
             }
         }
 
+        /// DIGER FONKSIYONLAR
+
         private void textBox1_Leave(object sender, EventArgs e)
         {
             if (textBox1.Text == "")
@@ -135,36 +165,15 @@ namespace RecipeGuideApplication
                 textBox1.Text = "Aradığınız yemek tarifini buraya girin...";
                 textBox1.ForeColor = SystemColors.ScrollBar;
             }
-        }
+        }     
 
-        public void ApplyFilter(string incDesc, string filterStyle)
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            string query = $"SELECT * FROM Tbl_Recipes ORDER BY {filterStyle} {incDesc}";
-
-            baglanti.Open();
-            SqlCommand cmd = new SqlCommand(query, baglanti);
-
-            try
+            if (e.KeyChar == (char)Keys.Enter)
             {
-                SqlDataReader reader = cmd.ExecuteReader();
-                DataTable dt = new DataTable();
-                dt.Load(reader);
-                dataGridView1.DataSource = dt;
-                dataGridView1.Show();
+                e.Handled = true;
+                pictureBox1_Click(this, new EventArgs());
             }
-            finally
-            {
-                baglanti.Close();
-            }
-
-            ConfigureDataGridViewColumns();
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            FilterSearching filterSearching = new FilterSearching();
-            filterSearching.Owner = this;
-            filterSearching.Show();
         }
     }
 }

@@ -86,7 +86,7 @@
             this.textBox1.TabIndex = 10;
             this.textBox1.Text = "Aradığınız yemek tarifini buraya girin...";
             this.textBox1.Click += new System.EventHandler(this.textBox1_Click);
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
             this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
             // panel2
@@ -130,7 +130,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(298, 602);
             this.button1.TabIndex = 2;
-            this.button1.Text = "Malzemelerim";
+            this.button1.Text = "Malzemelerim\r\n(Dolabım)";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
