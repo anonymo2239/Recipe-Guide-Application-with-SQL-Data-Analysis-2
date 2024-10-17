@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace RecipeGuideApplication
 {
@@ -36,7 +37,36 @@ namespace RecipeGuideApplication
             baglanti_my_ingredients.Close();
 
             ConfigureDataGridViewColumns();
+            combobox_guncelle();
+        }
 
+        /// DATABASE ISLEMLERI
+
+        SqlConnection baglanti_my_ingredients = new SqlConnection("Data Source=LAPTOP-E82TE7I7\\SQLEXPRESS;Initial Catalog=DbRecipeApplication2;Integrated Security=True");
+
+        void listele()
+        {
+            baglanti_my_ingredients.Open();
+            SqlCommand cmd2 = new SqlCommand("SELECT * FROM Tbl_Material ORDER BY MaterialID ASC", baglanti_my_ingredients);
+            SqlDataReader reader = cmd2.ExecuteReader();
+
+            DataTable dt = new DataTable();
+            dt.Load(reader);
+            dataGridView1.DataSource = dt;
+            dataGridView1.Show();
+
+            baglanti_my_ingredients.Close();
+        }
+        void temizle()
+        {
+            textBox3.Clear();
+            textBox4.Clear();
+            textBox5.Clear();
+            textBox7.Clear();
+        }
+        void combobox_guncelle()
+        {
+            comboBox1.Items.Clear();
             baglanti_my_ingredients.Open();
 
             SqlCommand cmd2 = new SqlCommand("SELECT MaterialName FROM Tbl_Material", baglanti_my_ingredients);
@@ -49,9 +79,39 @@ namespace RecipeGuideApplication
             baglanti_my_ingredients.Close();
         }
 
-        /// DATABASE ISLEMLERI
+        private void button1_Click(object sender, EventArgs e)
+        {
+            string richTextBoxContent = richTextBox1.Text.Trim();
+            string[] words = richTextBoxContent.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-        SqlConnection baglanti_my_ingredients = new SqlConnection("Data Source=LAPTOP-E82TE7I7\\SQLEXPRESS;Initial Catalog=DbRecipeApplication2;Integrated Security=True");
+            if (words.Length > 0)
+            {
+                string firstWord = words[0];
+
+                baglanti_my_ingredients.Open();
+                SqlCommand cmd3 = new SqlCommand(
+                    "SELECT DISTINCT REC.RecipeName, MA.MaterialName " +
+                    "FROM Tbl_Relation AS REL " +
+                    "INNER JOIN Tbl_Material AS MA ON REL.MaterialID = MA.MaterialID " +
+                    "INNER JOIN Tbl_Recipes AS REC ON REL.RecipeID = REC.RecipeID " +
+                    "WHERE MA.MaterialName = @p1", baglanti_my_ingredients);
+
+                cmd3.Parameters.AddWithValue("@p1", firstWord);
+                SqlDataReader reader2 = cmd3.ExecuteReader();
+
+                DataTable dt2 = new DataTable();
+                dt2.Load(reader2);
+                dataGridView2.DataSource = dt2;
+                dataGridView2.Show();
+
+                baglanti_my_ingredients.Close();
+                ConfigureDataGridViewColumns2();
+            }
+            else
+            {
+                MessageBox.Show("RichTextBox boş veya geçerli bir malzeme adı içermiyor.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
@@ -126,6 +186,87 @@ namespace RecipeGuideApplication
             }
         }
 
+        private void ConfigureDataGridViewColumns2()
+        {
+            if (dataGridView2.Columns.Count >= 3)
+            {
+                dataGridView2.Columns[0].Width = (int)(dataGridView2.Width * 0.25);
+                dataGridView2.Columns[0].HeaderText = "Tarif Adı";
+
+                dataGridView2.Columns[1].Width = (int)(dataGridView2.Width * 0.25);
+                dataGridView2.Columns[1].HeaderText = "Tarifteki Malzemeler";
+
+                dataGridView2.Columns[2].Width = (int)(dataGridView2.Width * 0.35);
+                dataGridView2.Columns[2].HeaderText = "Malzeme Durumu";
+
+                /*dataGridView2.Columns[3].Width = (int)(dataGridView2.Width * 0.15);
+                dataGridView2.Columns[3].HeaderText = "Eşleşme Oranı";*/
+            }
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox4.Text) || string.IsNullOrWhiteSpace(textBox5.Text) || string.IsNullOrWhiteSpace(comboBox2.Text) || string.IsNullOrWhiteSpace(textBox7.Text))
+            {
+                MessageBox.Show("Lütfen tüm alanları doldurun.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            baglanti_my_ingredients.Open();
+            SqlCommand cmd = new SqlCommand("insert into Tbl_Material(MaterialName, MaterialTotal, MaterialUnit, MaterialUnitPrice) values (@p1, @p2, @a3, @a4)", baglanti_my_ingredients);
+            cmd.Parameters.AddWithValue("@p1", textBox4.Text);
+            cmd.Parameters.AddWithValue("@p2", textBox5.Text);
+            cmd.Parameters.AddWithValue("@a3", comboBox2.Text);
+            cmd.Parameters.AddWithValue("@a4", textBox7.Text);
+            cmd.ExecuteNonQuery();
+
+            baglanti_my_ingredients.Close();
+            MessageBox.Show("Malzeme başarıyla eklendi", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            listele();
+            temizle();
+            combobox_guncelle();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox3.Text))
+            {
+                MessageBox.Show("Lütfen silinecek malzemenin üstüne çift tıklayın.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            baglanti_my_ingredients.Open();
+            SqlCommand cmdDel = new SqlCommand("delete from Tbl_Material where MaterialID = @m1", baglanti_my_ingredients);
+            cmdDel.Parameters.AddWithValue("@m1", textBox3.Text);
+            cmdDel.ExecuteNonQuery();
+            baglanti_my_ingredients.Close();
+            MessageBox.Show("Kayıt silindi", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            listele();
+            temizle();
+            combobox_guncelle();
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox3.Text))
+            {
+                MessageBox.Show("Lütfen güncellenecek malzemenin üstüne çift tıklayın.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            baglanti_my_ingredients.Open();
+            SqlCommand cmdUpt = new SqlCommand("Update Tbl_Material set MaterialName = @alp1, MaterialTotal = @alp2, MaterialUnitPrice = @alp3, MaterialUnit = @alp4 where MaterialID = @alp7", baglanti_my_ingredients);
+            cmdUpt.Parameters.Add("@alp1", textBox4.Text);
+            cmdUpt.Parameters.Add("@alp2", textBox5.Text);
+            cmdUpt.Parameters.Add("@alp3", textBox7.Text);
+            cmdUpt.Parameters.Add("@alp4", comboBox2.Text);
+            cmdUpt.Parameters.Add("@alp7", textBox3.Text);
+            cmdUpt.ExecuteNonQuery();
+            baglanti_my_ingredients.Close();
+            MessageBox.Show("Başarıyla güncellendi", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            listele();
+            combobox_guncelle();
+        }
+
         /// CLICK FONKSIYONLARI
 
         private void button3_Click(object sender, EventArgs e)
@@ -162,7 +303,7 @@ namespace RecipeGuideApplication
             textBox3.Text = dataGridView1.Rows[selected].Cells[0].Value.ToString();
             textBox4.Text = dataGridView1.Rows[selected].Cells[1].Value.ToString();
             textBox5.Text = dataGridView1.Rows[selected].Cells[2].Value.ToString();
-            textBox6.Text = dataGridView1.Rows[selected].Cells[3].Value.ToString();
+            comboBox2.Text = dataGridView1.Rows[selected].Cells[3].Value.ToString();
             textBox7.Text = dataGridView1.Rows[selected].Cells[4].Value.ToString();
         }
 
@@ -224,5 +365,11 @@ namespace RecipeGuideApplication
         {
             richTextBox1.Clear();
         }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            temizle();
+        }
+
     }
 }

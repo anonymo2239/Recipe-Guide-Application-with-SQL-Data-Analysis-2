@@ -39,6 +39,8 @@
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.button3 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button9 = new System.Windows.Forms.Button();
+            this.textBox8 = new System.Windows.Forms.TextBox();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -48,7 +50,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
@@ -61,8 +62,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
-            this.textBox8 = new System.Windows.Forms.TextBox();
-            this.button9 = new System.Windows.Forms.Button();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.button10 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.panel2.SuspendLayout();
@@ -96,6 +97,7 @@
             // 
             // dataGridView2
             // 
+            this.dataGridView2.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Location = new System.Drawing.Point(932, 288);
             this.dataGridView2.Name = "dataGridView2";
@@ -189,10 +191,32 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Elimdeki malzemelere bakarak bana tarif öner";
             // 
+            // button9
+            // 
+            this.button9.BackColor = System.Drawing.Color.LemonChiffon;
+            this.button9.Font = new System.Drawing.Font("Montserrat", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button9.Location = new System.Drawing.Point(372, 218);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(172, 41);
+            this.button9.TabIndex = 18;
+            this.button9.Text = "Tabloyu Temizle";
+            this.button9.UseVisualStyleBackColor = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
+            // 
+            // textBox8
+            // 
+            this.textBox8.Font = new System.Drawing.Font("Montserrat", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox8.Location = new System.Drawing.Point(206, 148);
+            this.textBox8.Name = "textBox8";
+            this.textBox8.ReadOnly = true;
+            this.textBox8.Size = new System.Drawing.Size(87, 37);
+            this.textBox8.TabIndex = 17;
+            // 
             // richTextBox1
             // 
             this.richTextBox1.Location = new System.Drawing.Point(372, 41);
             this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
             this.richTextBox1.Size = new System.Drawing.Size(489, 173);
             this.richTextBox1.TabIndex = 16;
             this.richTextBox1.Text = "";
@@ -219,6 +243,7 @@
             this.button1.TabIndex = 14;
             this.button1.Text = "Tarif Öner";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox1
             // 
@@ -263,8 +288,9 @@
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.Color.DarkKhaki;
+            this.groupBox2.Controls.Add(this.button10);
+            this.groupBox2.Controls.Add(this.comboBox2);
             this.groupBox2.Controls.Add(this.textBox7);
-            this.groupBox2.Controls.Add(this.textBox6);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.button8);
@@ -287,22 +313,15 @@
             // 
             // textBox7
             // 
-            this.textBox7.Location = new System.Drawing.Point(650, 68);
+            this.textBox7.Location = new System.Drawing.Point(632, 68);
             this.textBox7.Name = "textBox7";
             this.textBox7.Size = new System.Drawing.Size(116, 37);
             this.textBox7.TabIndex = 21;
             // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(650, 25);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(172, 37);
-            this.textBox6.TabIndex = 20;
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(446, 76);
+            this.label7.Location = new System.Drawing.Point(428, 76);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(158, 29);
             this.label7.TabIndex = 19;
@@ -311,7 +330,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(446, 33);
+            this.label6.Location = new System.Drawing.Point(428, 33);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(204, 29);
             this.label6.TabIndex = 18;
@@ -327,6 +346,7 @@
             this.button8.TabIndex = 17;
             this.button8.Text = "Ekle";
             this.button8.UseVisualStyleBackColor = false;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button7
             // 
@@ -338,6 +358,7 @@
             this.button7.TabIndex = 16;
             this.button7.Text = "Sil";
             this.button7.UseVisualStyleBackColor = false;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button6
             // 
@@ -349,6 +370,7 @@
             this.button6.TabIndex = 15;
             this.button6.Text = "Düzenle";
             this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // textBox5
             // 
@@ -368,6 +390,7 @@
             // 
             this.textBox3.Location = new System.Drawing.Point(182, 38);
             this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(106, 37);
             this.textBox3.TabIndex = 12;
             // 
@@ -410,26 +433,30 @@
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // textBox8
+            // comboBox2
             // 
-            this.textBox8.Font = new System.Drawing.Font("Montserrat", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox8.Location = new System.Drawing.Point(206, 148);
-            this.textBox8.Name = "textBox8";
-            this.textBox8.ReadOnly = true;
-            this.textBox8.Size = new System.Drawing.Size(87, 37);
-            this.textBox8.TabIndex = 17;
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "gram",
+            "mililitre",
+            "adet"});
+            this.comboBox2.Location = new System.Drawing.Point(632, 25);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(116, 37);
+            this.comboBox2.TabIndex = 22;
             // 
-            // button9
+            // button10
             // 
-            this.button9.BackColor = System.Drawing.Color.LemonChiffon;
-            this.button9.Font = new System.Drawing.Font("Montserrat", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button9.Location = new System.Drawing.Point(372, 218);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(172, 41);
-            this.button9.TabIndex = 18;
-            this.button9.Text = "Tabloyu Temizle";
-            this.button9.UseVisualStyleBackColor = false;
-            this.button9.Click += new System.EventHandler(this.button9_Click);
+            this.button10.BackColor = System.Drawing.Color.LemonChiffon;
+            this.button10.Font = new System.Drawing.Font("Montserrat", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button10.Location = new System.Drawing.Point(759, 91);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(120, 35);
+            this.button10.TabIndex = 23;
+            this.button10.Text = "Temizle";
+            this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // my_ingredients
             // 
@@ -491,7 +518,6 @@
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox7;
-        private System.Windows.Forms.TextBox textBox6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button button8;
@@ -499,5 +525,7 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.TextBox textBox8;
         private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.Button button10;
     }
 }
