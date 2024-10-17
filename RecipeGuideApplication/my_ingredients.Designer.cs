@@ -49,6 +49,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.textBox7 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -62,8 +64,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.button5 = new System.Windows.Forms.Button();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.button10 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.panel2.SuspendLayout();
@@ -91,6 +91,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 288);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.RowTemplate.Height = 28;
             this.dataGridView1.Size = new System.Drawing.Size(885, 525);
             this.dataGridView1.TabIndex = 2;
             this.dataGridView1.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellDoubleClick);
@@ -101,6 +102,7 @@
             this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView2.Location = new System.Drawing.Point(932, 288);
             this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.RowTemplate.Height = 28;
             this.dataGridView2.Size = new System.Drawing.Size(885, 525);
             this.dataGridView2.TabIndex = 3;
             // 
@@ -311,6 +313,31 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Dolabımı düzenle";
             // 
+            // button10
+            // 
+            this.button10.BackColor = System.Drawing.Color.LemonChiffon;
+            this.button10.Font = new System.Drawing.Font("Montserrat", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button10.Location = new System.Drawing.Point(759, 91);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(120, 35);
+            this.button10.TabIndex = 23;
+            this.button10.Text = "Temizle";
+            this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // comboBox2
+            // 
+            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox2.FormattingEnabled = true;
+            this.comboBox2.Items.AddRange(new object[] {
+            "gram",
+            "mililitre",
+            "adet"});
+            this.comboBox2.Location = new System.Drawing.Point(632, 25);
+            this.comboBox2.Name = "comboBox2";
+            this.comboBox2.Size = new System.Drawing.Size(116, 37);
+            this.comboBox2.TabIndex = 22;
+            // 
             // textBox7
             // 
             this.textBox7.Location = new System.Drawing.Point(632, 68);
@@ -432,31 +459,6 @@
             this.button5.Text = "?";
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "gram",
-            "mililitre",
-            "adet"});
-            this.comboBox2.Location = new System.Drawing.Point(632, 25);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(116, 37);
-            this.comboBox2.TabIndex = 22;
-            // 
-            // button10
-            // 
-            this.button10.BackColor = System.Drawing.Color.LemonChiffon;
-            this.button10.Font = new System.Drawing.Font("Montserrat", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button10.Location = new System.Drawing.Point(759, 91);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(120, 35);
-            this.button10.TabIndex = 23;
-            this.button10.Text = "Temizle";
-            this.button10.UseVisualStyleBackColor = false;
-            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // my_ingredients
             // 

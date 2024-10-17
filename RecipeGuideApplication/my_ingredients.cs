@@ -82,34 +82,116 @@ namespace RecipeGuideApplication
         private void button1_Click(object sender, EventArgs e)
         {
             string richTextBoxContent = richTextBox1.Text.Trim();
-            string[] words = richTextBoxContent.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] lines = richTextBoxContent.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
 
-            if (words.Length > 0)
+            if (lines.Length > 0)
             {
-                string firstWord = words[0];
+                Dictionary<string, double> userMaterials = new Dictionary<string, double>();
+                foreach (string line in lines)
+                {
+                    string[] parts = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (parts.Length >= 2 && double.TryParse(parts[1], out double quantity))
+                    {
+                        userMaterials[parts[0]] = quantity;
+                    }
+                }
 
-                baglanti_my_ingredients.Open();
-                SqlCommand cmd3 = new SqlCommand(
-                    "SELECT DISTINCT REC.RecipeName, MA.MaterialName " +
-                    "FROM Tbl_Relation AS REL " +
-                    "INNER JOIN Tbl_Material AS MA ON REL.MaterialID = MA.MaterialID " +
-                    "INNER JOIN Tbl_Recipes AS REC ON REL.RecipeID = REC.RecipeID " +
-                    "WHERE MA.MaterialName = @p1", baglanti_my_ingredients);
+                if (userMaterials.Count > 0)
+                {
+                    string valuesPlaceholders = string.Join(",", userMaterials.Select((_, index) => $"(@p{index}, @q{index})"));
+                    string query = $@"
+            WITH UserMaterials AS (
+                SELECT M.MaterialID, t.MaterialName, t.Quantity
+                FROM (VALUES {valuesPlaceholders}) AS t(MaterialName, Quantity)
+                JOIN Tbl_Material M ON t.MaterialName = M.MaterialName
+            ),
+            RecipeSummary AS (
+                SELECT R.RecipeID,
+                        STRING_AGG(M.MaterialName + ' (' + CAST(R.MaterialQuantity AS VARCHAR) + ')', ', ') AS AllMaterials,
+                        COUNT(DISTINCT R.MaterialID) AS TotalMaterialsNeeded,
+                        COUNT(DISTINCT UM.MaterialID) AS UserMaterialsCount,
+                        SUM(CASE 
+                            WHEN UM.MaterialID IS NULL THEN R.MaterialQuantity * M.MaterialUnitPrice
+                            WHEN R.MaterialQuantity > UM.Quantity THEN (R.MaterialQuantity - UM.Quantity) * M.MaterialUnitPrice
+                            ELSE 0 
+                        END) / 1000.0 AS MissingCost
+                FROM Tbl_Relation R
+                JOIN Tbl_Material M ON R.MaterialID = M.MaterialID
+                LEFT JOIN UserMaterials UM ON R.MaterialID = UM.MaterialID
+                GROUP BY R.RecipeID
+            )
+            SELECT Rec.RecipeName AS [Tarif Adı],
+                    RS.AllMaterials AS [Tarifteki Malzemeler],
+                    CASE 
+                        WHEN RS.MissingCost = 0 THEN 'Var'
+                        WHEN RS.MissingCost IS NULL THEN 'Bilinmiyor'
+                        ELSE 'Eksik (Maliyet: ' + CAST(RS.MissingCost AS VARCHAR) + ')'
+                    END AS [Malzeme Durumu],
+                    CAST(CAST(RS.UserMaterialsCount AS FLOAT) / RS.TotalMaterialsNeeded * 100 AS DECIMAL(5,2)) AS [Eşleşme Oranı]
+            FROM Tbl_Recipes Rec
+            JOIN RecipeSummary RS ON Rec.RecipeID = RS.RecipeID
+            WHERE RS.UserMaterialsCount > 0
+            ORDER BY [Eşleşme Oranı] DESC, Rec.RecipeName";
 
-                cmd3.Parameters.AddWithValue("@p1", firstWord);
-                SqlDataReader reader2 = cmd3.ExecuteReader();
+                    using (SqlConnection connection = new SqlConnection(baglanti_my_ingredients.ConnectionString))
+                    {
+                        connection.Open();
+                        using (SqlCommand cmd3 = new SqlCommand(query, connection))
+                        {
+                            int index = 0;
+                            foreach (var material in userMaterials)
+                            {
+                                cmd3.Parameters.AddWithValue($"@p{index}", material.Key);
+                                cmd3.Parameters.AddWithValue($"@q{index}", material.Value);
+                                index++;
+                            }
 
-                DataTable dt2 = new DataTable();
-                dt2.Load(reader2);
-                dataGridView2.DataSource = dt2;
-                dataGridView2.Show();
+                            using (SqlDataReader reader2 = cmd3.ExecuteReader())
+                            {
+                                DataTable dt2 = new DataTable();
+                                dt2.Load(reader2);
 
-                baglanti_my_ingredients.Close();
-                ConfigureDataGridViewColumns2();
+                                dataGridView2.DataSource = dt2;
+                                dataGridView2.Show();
+                            }
+                        }
+                    }
+
+                    ConfigureDataGridViewColumns2();
+
+                    // Satır renklerini ayarla
+                    foreach (DataGridViewRow row in dataGridView2.Rows)
+                    {
+                        if (row.Cells["Malzeme Durumu"].Value != null)
+                        {
+                            string durum = row.Cells["Malzeme Durumu"].Value.ToString();
+                            if (durum.StartsWith("Var"))
+                            {
+                                row.DefaultCellStyle.BackColor = Color.LightGreen;
+                            }
+                            else if (durum.StartsWith("Eksik"))
+                            {
+                                row.DefaultCellStyle.BackColor = Color.Salmon;
+                            }
+                            else
+                            {
+                                row.DefaultCellStyle.BackColor = Color.Yellow;
+                            }
+                        }
+                        else
+                        {
+                            row.DefaultCellStyle.BackColor = Color.Gray;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Geçerli bir malzeme adı ve miktarı bulunamadı.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
             }
             else
             {
-                MessageBox.Show("RichTextBox boş veya geçerli bir malzeme adı içermiyor.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("RichTextBox boş.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -188,19 +270,24 @@ namespace RecipeGuideApplication
 
         private void ConfigureDataGridViewColumns2()
         {
-            if (dataGridView2.Columns.Count >= 3)
+            if (dataGridView2.Columns.Count >= 4)
             {
+                // "Tarif Adı" sütunu
                 dataGridView2.Columns[0].Width = (int)(dataGridView2.Width * 0.25);
                 dataGridView2.Columns[0].HeaderText = "Tarif Adı";
 
+                // "Tarifteki Malzemeler" sütunu
                 dataGridView2.Columns[1].Width = (int)(dataGridView2.Width * 0.25);
                 dataGridView2.Columns[1].HeaderText = "Tarifteki Malzemeler";
 
-                dataGridView2.Columns[2].Width = (int)(dataGridView2.Width * 0.35);
+                // "Malzeme Durumu" sütunu
+                dataGridView2.Columns[2].Width = (int)(dataGridView2.Width * 0.25);
                 dataGridView2.Columns[2].HeaderText = "Malzeme Durumu";
 
-                /*dataGridView2.Columns[3].Width = (int)(dataGridView2.Width * 0.15);
-                dataGridView2.Columns[3].HeaderText = "Eşleşme Oranı";*/
+                // "Eşleşme Oranı" sütunu
+                dataGridView2.Columns[3].Width = (int)(dataGridView2.Width * 0.15);
+                dataGridView2.Columns[3].HeaderText = "Eşleşme Oranı";
+                dataGridView2.Columns[3].DefaultCellStyle.Format = "N2";
             }
         }
 
