@@ -104,6 +104,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="recipe_detail.resx">
+      <DependentUpon>recipe_detail.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="DbRecipeApplication2DataSet.xsc">
       <DependentUpon>DbRecipeApplication2DataSet.xsd</DependentUpon>
     </None>

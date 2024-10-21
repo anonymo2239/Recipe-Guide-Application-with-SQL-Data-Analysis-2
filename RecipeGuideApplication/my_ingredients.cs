@@ -100,38 +100,41 @@ namespace RecipeGuideApplication
                 {
                     string valuesPlaceholders = string.Join(",", userMaterials.Select((_, index) => $"(@p{index}, @q{index})"));
                     string query = $@"
-            WITH UserMaterials AS (
-                SELECT M.MaterialID, t.MaterialName, t.Quantity
-                FROM (VALUES {valuesPlaceholders}) AS t(MaterialName, Quantity)
-                JOIN Tbl_Material M ON t.MaterialName = M.MaterialName
-            ),
-            RecipeSummary AS (
-                SELECT R.RecipeID,
-                        STRING_AGG(M.MaterialName + ' (' + CAST(R.MaterialQuantity AS VARCHAR) + ')', ', ') AS AllMaterials,
-                        COUNT(DISTINCT R.MaterialID) AS TotalMaterialsNeeded,
-                        COUNT(DISTINCT UM.MaterialID) AS UserMaterialsCount,
-                        SUM(CASE 
-                            WHEN UM.MaterialID IS NULL THEN R.MaterialQuantity * M.MaterialUnitPrice
-                            WHEN R.MaterialQuantity > UM.Quantity THEN (R.MaterialQuantity - UM.Quantity) * M.MaterialUnitPrice
-                            ELSE 0 
-                        END) / 1000.0 AS MissingCost
-                FROM Tbl_Relation R
-                JOIN Tbl_Material M ON R.MaterialID = M.MaterialID
-                LEFT JOIN UserMaterials UM ON R.MaterialID = UM.MaterialID
-                GROUP BY R.RecipeID
-            )
-            SELECT Rec.RecipeName AS [Tarif Adı],
-                    RS.AllMaterials AS [Tarifteki Malzemeler],
-                    CASE 
-                        WHEN RS.MissingCost = 0 THEN 'Var'
-                        WHEN RS.MissingCost IS NULL THEN 'Bilinmiyor'
-                        ELSE 'Eksik (Maliyet: ' + CAST(RS.MissingCost AS VARCHAR) + ')'
-                    END AS [Malzeme Durumu],
-                    CAST(CAST(RS.UserMaterialsCount AS FLOAT) / RS.TotalMaterialsNeeded * 100 AS DECIMAL(5,2)) AS [Eşleşme Oranı]
-            FROM Tbl_Recipes Rec
-            JOIN RecipeSummary RS ON Rec.RecipeID = RS.RecipeID
-            WHERE RS.UserMaterialsCount > 0
-            ORDER BY [Eşleşme Oranı] DESC, Rec.RecipeName";
+WITH UserMaterials AS (
+    SELECT M.MaterialID, t.MaterialName, t.Quantity
+    FROM (VALUES {valuesPlaceholders}) AS t(MaterialName, Quantity)
+    JOIN Tbl_Material M ON t.MaterialName = M.MaterialName
+),
+RecipeSummary AS (
+    SELECT R.RecipeID,
+           STRING_AGG(M.MaterialName + ' (' + CAST(R.MaterialQuantity AS VARCHAR) + ')', ', ') AS AllMaterials,
+           COUNT(DISTINCT R.MaterialID) AS TotalMaterialsNeeded,
+           COUNT(DISTINCT UM.MaterialID) AS UserMaterialsCount,
+           SUM(CASE 
+               WHEN UM.MaterialID IS NULL THEN 0
+               WHEN R.MaterialQuantity > UM.Quantity THEN (R.MaterialQuantity - UM.Quantity) * M.MaterialUnitPrice / 1000.0
+               ELSE 0 
+           END) AS MissingCost,
+           SUM(CASE WHEN UM.MaterialID IS NOT NULL AND R.MaterialQuantity <= UM.Quantity THEN 1 ELSE 0 END) AS FullMatchCount
+    FROM Tbl_Relation R
+    JOIN Tbl_Material M ON R.MaterialID = M.MaterialID
+    LEFT JOIN UserMaterials UM ON R.MaterialID = UM.MaterialID
+    GROUP BY R.RecipeID
+)
+SELECT Rec.RecipeName AS [Tarif Adı],
+       RS.AllMaterials AS [Tarifteki Malzemeler],
+       CASE 
+           WHEN RS.MissingCost = 0 THEN 'Var'
+           ELSE 'Eksik (Maliyet: ' + CAST(RS.MissingCost AS VARCHAR(10)) + ')'
+       END AS [Malzeme Durumu],
+       CASE
+           WHEN RS.FullMatchCount = RS.TotalMaterialsNeeded THEN 100.0
+           ELSE CAST(CAST(RS.UserMaterialsCount AS FLOAT) / RS.TotalMaterialsNeeded * 100 AS DECIMAL(5,2))
+       END AS [Eşleşme Oranı]
+FROM Tbl_Recipes Rec
+JOIN RecipeSummary RS ON Rec.RecipeID = RS.RecipeID
+WHERE RS.UserMaterialsCount > 0
+ORDER BY [Eşleşme Oranı] DESC, Rec.RecipeName";
 
                     using (SqlConnection connection = new SqlConnection(baglanti_my_ingredients.ConnectionString))
                     {
@@ -165,7 +168,7 @@ namespace RecipeGuideApplication
                         if (row.Cells["Malzeme Durumu"].Value != null)
                         {
                             string durum = row.Cells["Malzeme Durumu"].Value.ToString();
-                            if (durum.StartsWith("Var"))
+                            if (durum == "Var")
                             {
                                 row.DefaultCellStyle.BackColor = Color.LightGreen;
                             }
@@ -173,14 +176,6 @@ namespace RecipeGuideApplication
                             {
                                 row.DefaultCellStyle.BackColor = Color.Salmon;
                             }
-                            else
-                            {
-                                row.DefaultCellStyle.BackColor = Color.Yellow;
-                            }
-                        }
-                        else
-                        {
-                            row.DefaultCellStyle.BackColor = Color.Gray;
                         }
                     }
                 }
@@ -458,5 +453,42 @@ namespace RecipeGuideApplication
             temizle();
         }
 
+        private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                recipe_detail recipe_Detail = new recipe_detail();
+                recipe_Detail.Owner = this;
+
+                // Seçili satırın verilerini al
+                DataGridViewRow row = dataGridView2.Rows[e.RowIndex];
+
+                // dataGridView2'den tarif adını al
+                string recipeName = row.Cells["Tarif Adı"].Value.ToString();
+
+                // Veritabanından tarif detaylarını çek
+                using (SqlConnection conn = new SqlConnection("Data Source=LAPTOP-E82TE7I7\\SQLEXPRESS;Initial Catalog=DbRecipeApplication2;Integrated Security=True"))
+                {
+                    conn.Open();
+                    string query = "SELECT RecipeName, RecipeCategory, RecipeTime, RecipeInstruction FROM Tbl_Recipes WHERE RecipeName = @RecipeName";
+                    using (SqlCommand cmd = new SqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@RecipeName", recipeName);
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                recipe_Detail.TarifAdi = reader["RecipeName"].ToString();
+                                recipe_Detail.Kategori = reader["RecipeCategory"].ToString();
+                                recipe_Detail.HazirlamaSuresi = reader["RecipeTime"].ToString() + " dakika";
+                                recipe_Detail.HazirlanısTalimati = reader["RecipeInstruction"].ToString();
+                            }
+                        }
+                    }
+                }
+
+                recipe_Detail.Show();
+            }
+        }
     }
 }

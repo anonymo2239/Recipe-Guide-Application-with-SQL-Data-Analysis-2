@@ -104,7 +104,7 @@ namespace RecipeGuideApplication
                 dataGridView1.Columns[0].HeaderText = "ID";
 
                 dataGridView1.Columns[1].Width = (int)(dataGridView1.Width * 0.2);
-                dataGridView1.Columns[1].HeaderText = "Isim";
+                dataGridView1.Columns[1].HeaderText = "Tarif Adı";
 
                 dataGridView1.Columns[2].Width = (int)(dataGridView1.Width * 0.25);
                 dataGridView1.Columns[2].HeaderText = "Kategori";
@@ -173,6 +173,24 @@ namespace RecipeGuideApplication
             {
                 e.Handled = true;
                 pictureBox1_Click(this, new EventArgs());
+            }
+        }
+
+        private void dataGridView1_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                recipe_detail recipe_Detail = new recipe_detail();
+                recipe_Detail.Owner = this;
+
+                DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
+
+                recipe_Detail.TarifAdi = row.Cells[1].Value.ToString(); // "Tarif Adı" sütunu
+                recipe_Detail.Kategori = row.Cells[2].Value.ToString(); // "Kategori" sütunu
+                recipe_Detail.HazirlamaSuresi = row.Cells[3].Value.ToString() + " dakika"; // "Süre" sütunu
+                recipe_Detail.HazirlanısTalimati = row.Cells[4].Value.ToString(); // "Talimat" sütunu
+
+                recipe_Detail.Show();
             }
         }
     }
