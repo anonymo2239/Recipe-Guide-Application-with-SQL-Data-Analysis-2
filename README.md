@@ -51,6 +51,16 @@ This project is a *Recipe App* designed to manage recipes, including adding, edi
 2. Use the SQL script provided in the project to create the required tables.
 3. Update the connection string in the app. configuration file.
 
-##Screenshots
+### Photos
 
 ![](images/image1.png)
+
+![](images/image2.png)
+
+![](images/image3.png)
+
+![](images/image4.png)
+
+![](images/image5.png)
+
+![](images/image6.png)
