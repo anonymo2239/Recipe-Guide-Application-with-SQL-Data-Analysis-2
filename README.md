@@ -35,17 +35,17 @@ This project is a *Recipe App* designed to manage recipes, including adding, edi
 
 #### Installation Steps:
 1. Clone the project repository:
-   bash
+   ```bash
    git clone https://github.com/your-username/Recipe-Guide-Application-with-SQL-Data-Analysis-2.git
 2. Create a new database in MS SQL Server and update the connection string in the project's configuration file.
 3. Open the project in Visual Studio.
 4. Run the project by pressing F5 or by running the following command in the terminal
-   bash
+   ```bash
    dotnet run
 
 ### Database Setup:
 1. Create a database in MS SQL Server:
-   bash
+   ```bash
    CREATE DATABASE DbRecipeApplication;
    
 2. Use the SQL script provided in the project to create the required tables.
@@ -54,8 +54,10 @@ This project is a *Recipe App* designed to manage recipes, including adding, edi
 ### Photos
 
 ![](images/image1.png)
+Main Page where we can see the all recipes.
 
 ![](images/image2.png)
+Arrange recipes page that clicked the 'Tarifleri Düzenle' button
 
 ![](images/image3.png)
 
