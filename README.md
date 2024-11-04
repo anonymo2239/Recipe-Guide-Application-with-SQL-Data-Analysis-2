@@ -54,15 +54,19 @@ This project is a *Recipe App* designed to manage recipes, including adding, edi
 ### Photos
 
 ![](images/image1.png)
-Main Page where we can see the all recipes.
+*Main Page where we can see the all recipes.*
 
 ![](images/image2.png)
-Arrange recipes page that clicked the 'Tarifleri Düzenle' button
+*'Arrange recipes' page that appears after clickeing the 'Tarifleri Düzenle' button.*
 
 ![](images/image3.png)
+*Filter Search tab that we can filter search.*
 
 ![](images/image4.png)
+*'Arrange my fridge' and 'suggest me recipe' pages.*
 
 ![](images/image5.png)
+*'Suggest me recipe' page that we can see situation of recipes*
 
 ![](images/image6.png)
+*'Cook tab' that appears after clicking onto the recipe row*
