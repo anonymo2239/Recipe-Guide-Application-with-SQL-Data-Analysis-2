@@ -19,7 +19,8 @@ namespace RecipeGuideApplication
         public arrange_recipe()
         {
             InitializeComponent();
-            FillCategoryComboBox();
+            
+            combobox1Liste(comboBox1);
             combobox2Liste(comboBox2);
             SetupComboBox();
             textBox4.Text = "miktar giriniz(gr/ml)...";
@@ -39,28 +40,46 @@ namespace RecipeGuideApplication
             comboBox2.Text = "Malzemeler";
             comboBox2.ForeColor = Color.Gray;
             comboBox2.DropDownHeight = 300;
+            comboBox1.SelectedIndex = -1;
+            comboBox1.ForeColor = Color.Black;
+            comboBox1.DropDownHeight = 300;
         }
 
-        private void FillCategoryComboBox()
+        public void combobox1Liste(System.Windows.Forms.ComboBox comboBox)
         {
-            List<string> categories = new List<string>
+            string connectionString = "Data Source=LAPTOP-E82TE7I7\\SQLEXPRESS;Initial Catalog=DbRecipeApplication2;Integrated Security=True";
+            string query = "SELECT DISTINCT RecipeCategory FROM Tbl_Recipes";
+
+            try
             {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
 
-                "Ana Yemek",
-                "Çorba",
-                "Zeytinyağlı",
-                "Tatlı",
-                "Meze",
-                "Fast Food",
-                "Salata",
-                "Börek",
-                "Kahvaltılık",
-                "İçecek"
-            };
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            comboBox.Items.Clear();  // Mevcut öğeleri temizle
 
-            comboBox1.DataSource = categories;
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.SelectedIndex = -1;
+                            while (reader.Read())
+                            {
+                                string recipeCategory = reader["RecipeCategory"].ToString();
+                                comboBox.Items.Add(recipeCategory);
+                            }
+                        }
+                    }
+                }
+
+                if (comboBox.Items.Count > 0)
+                {
+                    comboBox.SelectedIndex = 0;  // İlk öğeyi seç (isteğe bağlı)
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Veritabanından veri çekerken bir hata oluştu: " + ex.Message);
+            }
         }
 
         public void combobox2Liste(System.Windows.Forms.ComboBox comboBox)
@@ -398,6 +417,16 @@ namespace RecipeGuideApplication
                 textBox4.Clear();
                 textBox4.ForeColor = Color.Black;
             }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (isUpdating) return;
+
+            isUpdating = true;
+            comboBox1.ForeColor = Color.Black;
+            isUpdating = false;
+            
         }
     }
 }
