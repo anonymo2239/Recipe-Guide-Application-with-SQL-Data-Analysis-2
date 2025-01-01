@@ -1,6 +1,6 @@
 # Recipe App with SQL
 
-This project is a *Recipe App* designed to manage recipes, including adding, editing and listing recipes. Users can add various recipes, edit existing recipes and list all recipes. The app includes details such as ingredient list, cooking instructions and recipe categories.This project was developed by two people (with:anonymo2239/github).
+This project is a *Recipe App* designed to manage recipes, including adding, editing and listing recipes. Users can add various recipes, edit existing recipes and list all recipes. The app includes details such as ingredient list, cooking instructions and recipe categories.This project was developed by two people (with:@Simsekomer/github).
 
 ## Features
 
