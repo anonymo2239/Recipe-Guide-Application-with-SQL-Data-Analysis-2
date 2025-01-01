@@ -23,7 +23,7 @@ This project is a *Recipe App* designed to manage recipes, including adding, edi
 ## Technologies Used
 - *C#* with Windows Forms for UI.
 - *MS SQL* for database management.
-- Visual Studio* as development environment.
+- *Visual Studio* as development environment.
 
 ## Installation and Use
 
