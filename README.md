@@ -1,6 +1,6 @@
 # Recipe App with SQL
 
-This project is a *Recipe App* designed to manage recipes, including adding, editing and listing recipes. Users can add various recipes, edit existing recipes and list all recipes. The app includes details such as ingredient list, cooking instructions and recipe categories.This project was developed by two people (with:@Simsekomer/github).
+This project is a *Recipe App* designed to manage recipes, including adding, editing and listing recipes. Users can add various recipes, edit existing recipes and list all recipes. The app includes details such as ingredient list, cooking instructions and recipe categories. This project was developed by two people (with:@Simsekomer/github).
 
 ## Features
 
@@ -21,14 +21,14 @@ This project is a *Recipe App* designed to manage recipes, including adding, edi
 
 
 ## Technologies Used
-- C# * with Windows Forms for UI.
-- MS SQL * for database management.
-- * Visual Studio Code * as development environment.
+- *C#* with Windows Forms for UI.
+- *MS SQL* for database management.
+- Visual Studio* as development environment.
 
 ## Installation and Use
 
 #### Requirements:
-- Visual Studio Code or Visual Studio
+- Visual Studio
 - MS SQL Server
 - .NET Framework
 
